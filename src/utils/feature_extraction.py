@@ -55,10 +55,10 @@ def has_suffix_prefix(url):
 def has_subdomains(url):
     domain = get_host_name(url)
     if not has_ip(url) and domain.count('.') > 2:
-        return 1
+        return 2
     if domain.count('.') == 2:
-        return 0
-    return -1
+        return 1
+    return 0
 
 
 def is_https(url):
@@ -67,10 +67,10 @@ def is_https(url):
 
 def url_length_long(url):
     if len(url) > 70:
-        return 1
+        return 2
     if 70 > len(url) >= 51:
-        return 0
-    return -1
+        return 1
+    return 0
 
 
 def is_active(url):
@@ -88,13 +88,13 @@ def web_traffic(url):
                              "html.parser").find("REACH")['RANK']
         rank = int(rank)
         if not (rank < 100000):
-            return -1
-        return 0
+            return 0
+        return 1
     except HTTPError:
-        return -1
+        return 0
     except Exception as e:
         print(e)
-        return 1
+        return 2
 
 
 def has_dns_record(url):
@@ -105,18 +105,33 @@ def has_dns_record(url):
 def is_sixmonth_old_dns(url):
     dns_details = get_domain_details(url)
     if not dns_details:
-        return 1
+        return 2
     created_time = dns_details.creation_date
     expiry_date = dns_details.expiration_date
 
     if not created_time or not expiry_date:
-        return 1
+        return 2
 
     if not isinstance(created_time, str) or not isinstance(expiry_date, str) \
             or isinstance(created_time, list) or isinstance(expiry_date, list):
-        return -1
+        return 0
 
     created_time = datetime.strptime(created_time, '%Y-%m-%d')
     expiry_date = datetime.strptime(expiry_date, '%Y-%m-%d')
     age = abs(expiry_date - created_time).days / 30
-    return 1 if age < 6 else 0
+    return 2 if age < 6 else 1
+
+
+def gen_features(df):
+    funcs = [has_ip, has_at, has_hypen, has_redirection, has_non_standard_ports, has_subdomains, has_suffix_prefix,
+             is_https, url_length_long, shortining_service,
+             is_active, web_traffic, has_dns_record, is_sixmonth_old_dns]
+    for func in funcs:
+        df[func.__name__] = df.url.apply(func)
+    return df
+
+
+def gen_features_predict(url):
+    funcs = [has_ip, url_length_long, shortining_service, has_at, has_suffix_prefix, has_subdomains,
+             has_non_standard_ports, is_sixmonth_old_dns, has_dns_record, web_traffic]
+    return [func(url) for func in funcs]
