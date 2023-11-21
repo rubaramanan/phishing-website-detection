@@ -36,8 +36,8 @@ class PhishDetectorFeedForward:
 
     def test(self, X):
         pred = self.model.predict(X)
-        labels = {0: 'Phish',
-                  1: 'Legitimate'}
+        labels = {0: 'Legitimate',
+                  1: 'Phish'}
         key = np.argmax(pred)
         return labels[key]
 
