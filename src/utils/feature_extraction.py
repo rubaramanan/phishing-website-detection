@@ -45,7 +45,8 @@ def shortining_service(url):
 
 def has_non_standard_ports(url):
     standard_ports = [21, 22, 23, 80, 443, 445, 1433, 1521, 3306, 3389]
-    return 1 if get_port(url) not in standard_ports else 0
+    port = get_port(url)
+    return 1 if (port and port not in standard_ports) else 0
 
 
 def has_suffix_prefix(url):
