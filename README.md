@@ -18,3 +18,8 @@ Follow below steps to setup phishing detector
    ```bash
    python src/predict_pipeline.py
    ```
+
+5. Run Streamlit UI
+   ```bash
+   streamlit run streamlit_app.py
+   ```
