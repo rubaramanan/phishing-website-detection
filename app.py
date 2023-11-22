@@ -1,6 +1,6 @@
 from flask import Flask, request
 from flask.json import jsonify
-from src.predict_pipeline import predict
+from src.phish_detector.predict_pipeline import predict
 import json
 
 app = Flask(__name__)
