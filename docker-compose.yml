@@ -1,0 +1,15 @@
+services:
+  streamlit:
+    image: phish_detector:1.0
+    container_name: "streamlit_ui"
+    volumes:
+      - ".:/app"
+    ports:
+      - "8501:8501"
+
+  train_model:
+    image: phish_detector:1.0
+    entrypoint: python train_pipeline.py
+    container_name: "train_model"
+    volumes:
+      - ".:/app"
