@@ -18,5 +18,7 @@ Follow below steps to setup phishing detector
    ```bash
    docker-compose up -d streamlit
    ```
+
+5. Open the ui using the link: `http://localhost:8501`
    
 
