@@ -6,20 +6,17 @@ Follow below steps to setup phishing detector
    ```bash
    git clone https://github.com/rubaramanan/phishing-website-detection.git
    ```
-2. Install required libraries
+2. build docker image
    ```bash
-   pip install -r requirements.txt
+   docker build . -t phish_detector:1.0
    ```
-3. Run Training pipeline
+3. Run the training model
    ```bash
-   python src/train_pipeline.py
+   docker-compose up train_model
    ```
-4. Run Testing pipeline
+4. Run the testing UI
    ```bash
-   python src/predict_pipeline.py
+   docker-compose up -d streamlit
    ```
+   
 
-5. Run Streamlit UI
-   ```bash
-   streamlit run streamlit_app.py
-   ```
