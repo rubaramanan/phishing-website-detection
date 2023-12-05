@@ -18,7 +18,7 @@ class PhishDetectorXGBoost:
         pred = self.model.predict(X)
         labels = {0: 'Legitimate',
                   1: 'Phish'}
-        key = np.argmax(pred)
+        key = pred.item()
         return labels[key]
 
     def save_model(self, path):
