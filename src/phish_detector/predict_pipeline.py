@@ -1,11 +1,15 @@
 from src.phish_detector.predict.feed_forward import feedforward_prediction
 from src.phish_detector.predict.state_of_the_art import sota_prediction
+from src.phish_detector.predict.ensemble import xgb_prediction
+from src.phish_detector.predict.traditional_ml import lr_prediction
 
 
 def predict(url):
 
     results = feedforward_prediction(url)
     results |= sota_prediction(url)
+    results |= lr_prediction(url)
+    results |= xgb_prediction(url)
 
     return {'Voted weight': voted_weight_result(results)} | results
 
