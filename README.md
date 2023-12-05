@@ -5,6 +5,8 @@ Follow below steps to setup phishing detector
 1. Clone repo
    ```bash
    git clone https://github.com/rubaramanan/phishing-website-detection.git
+   cd phishing-website-detection
+   mkdir -p models/sota
    ```
 2. build docker image
    ```bash
